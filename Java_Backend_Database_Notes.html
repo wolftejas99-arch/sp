@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SQL, NoSQL, API, Spring, JUnit & JPA Notes</title>
+<style>
+    * { box-sizing: border-box; }
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 1.6;
+        background: #f4f7fb;
+        color: #172033;
+    }
+    header {
+        background: linear-gradient(135deg, #101828, #243b64);
+        color: white;
+        padding: 45px 20px;
+        text-align: center;
+    }
+    header h1 { margin: 0 0 10px; font-size: 34px; }
+    header p { margin: 0; color: #dbe7ff; }
+    main {
+        max-width: 1100px;
+        margin: 30px auto;
+        padding: 0 18px 50px;
+    }
+    section {
+        background: white;
+        margin: 24px 0;
+        padding: 28px;
+        border-radius: 14px;
+        box-shadow: 0 5px 18px rgba(0,0,0,.07);
+    }
+    h2 { color: #173b75; border-bottom: 2px solid #e5eaf2; padding-bottom: 10px; }
+    h3 { color: #284f8f; margin-top: 25px; }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 18px 0;
+        overflow: hidden;
+    }
+    th, td {
+        border: 1px solid #dce2eb;
+        padding: 11px;
+        text-align: left;
+        vertical-align: top;
+    }
+    th { background: #edf3fb; }
+    pre {
+        background: #111827;
+        color: #e5e7eb;
+        padding: 18px;
+        border-radius: 10px;
+        overflow-x: auto;
+        font-size: 14px;
+    }
+    code { font-family: Consolas, monospace; }
+    .diagram {
+        background: #f1f5f9;
+        padding: 20px;
+        border-radius: 10px;
+        font-family: Consolas, monospace;
+        white-space: pre-wrap;
+        text-align: center;
+    }
+    .definition {
+        background: #eef6ff;
+        border-left: 5px solid #2d6cdf;
+        padding: 14px 18px;
+        border-radius: 7px;
+    }
+    footer {
+        text-align: center;
+        padding: 25px;
+        color: #667085;
+    }
+    @media (max-width: 700px) {
+        header h1 { font-size: 27px; }
+        section { padding: 20px; }
+        table { font-size: 13px; }
+    }
+</style>
+</head>
+
+<body>
+<header>
+    <h1>Java Backend & Database Notes</h1>
+    <p>SQL • NoSQL • API & Endpoints • Spring • Spring Boot • JUnit • ORM • Spring Data JPA</p>
+</header>
+
+<main>
+
+<section>
+<h2>1. Difference Between SQL and NoSQL</h2>
+<div class="definition">
+<strong>SQL</strong> stands for Structured Query Language and is mainly used with relational databases.
+<strong>NoSQL</strong> means Not Only SQL and is used for non-relational database systems.
+</div>
+
+<table>
+<tr><th>No.</th><th>SQL</th><th>NoSQL</th></tr>
+<tr><td>1</td><td>Relational databases.</td><td>Generally non-relational databases.</td></tr>
+<tr><td>2</td><td>Data is stored in tables.</td><td>Data may be stored as documents, key-value pairs, graphs, or columns.</td></tr>
+<tr><td>3</td><td>Uses a fixed or predefined schema.</td><td>Usually has a flexible or dynamic schema.</td></tr>
+<tr><td>4</td><td>Data is organized into rows and columns.</td><td>Documents or records can have different structures.</td></tr>
+<tr><td>5</td><td>Supports relationships between tables.</td><td>Relationships are often handled through embedding or references.</td></tr>
+<tr><td>6</td><td>Uses SQL for querying data.</td><td>Query language depends on the database.</td></tr>
+<tr><td>7</td><td>Commonly follows ACID transactions.</td><td>Transaction and consistency models depend on the NoSQL system.</td></tr>
+<tr><td>8</td><td>Can use vertical and horizontal scaling depending on the system.</td><td>Commonly designed for horizontal scaling.</td></tr>
+<tr><td>9</td><td>Suitable for highly structured data.</td><td>Suitable for structured, semi-structured, or changing data.</td></tr>
+<tr><td>10</td><td>Examples: MySQL, PostgreSQL, Oracle, SQL Server.</td><td>Examples: MongoDB, Cassandra, Redis, Neo4j.</td></tr>
+<tr><td>11</td><td>Normalization is commonly used.</td><td>Denormalization is commonly used in many designs.</td></tr>
+<tr><td>12</td><td>Schema changes can require migrations.</td><td>Schema changes are generally more flexible.</td></tr>
+<tr><td>13</td><td>Complex joins are supported.</td><td>Traditional joins may be unavailable or handled differently.</td></tr>
+<tr><td>14</td><td>Common in banking, accounting and transaction-heavy systems.</td><td>Common in large-scale and rapidly changing applications.</td></tr>
+<tr><td>15</td><td>Data consistency is often a major design priority.</td><td>Systems may prioritize scalability, availability and performance depending on requirements.</td></tr>
+</table>
+
+<h3>SQL Example</h3>
+<pre><code>SELECT * FROM students
+WHERE age &gt; 18;</code></pre>
+
+<h3>NoSQL Example</h3>
+<pre><code>{
+  "id": 1,
+  "name": "Rahul",
+  "age": 20,
+  "course": "CSE"
+}</code></pre>
+
+<p><strong>In short:</strong> SQL → structured, relational, tables, predefined schema. NoSQL → flexible, non-relational, documents/key-value/graph, flexible schema.</p>
+</section>
+
+<section>
+<h2>2. Working of API and Endpoints</h2>
+
+<div class="definition">
+<strong>API</strong> stands for Application Programming Interface. It allows different software applications to communicate with each other.
+</div>
+
+<div class="diagram">
+Frontend
+   ↓
+API Request
+   ↓
+Backend Server
+   ↓
+Database
+   ↓
+Backend Server
+   ↓
+API Response
+   ↓
+Frontend
+</div>
+
+<h3>What is an Endpoint?</h3>
+<p>An <strong>endpoint</strong> is a specific URL/address through which an API provides a particular resource or operation.</p>
+
+<pre><code>GET    /api/students
+GET    /api/students/101
+POST   /api/students
+PUT    /api/students/101
+DELETE /api/students/101</code></pre>
+
+<h3>Common HTTP Methods</h3>
+<table>
+<tr><th>Method</th><th>Purpose</th></tr>
+<tr><td>GET</td><td>Retrieve data</td></tr>
+<tr><td>POST</td><td>Create new data</td></tr>
+<tr><td>PUT</td><td>Update existing data</td></tr>
+<tr><td>PATCH</td><td>Partially update data</td></tr>
+<tr><td>DELETE</td><td>Delete data</td></tr>
+</table>
+
+<h3>Working of an API</h3>
+<ol>
+<li>Client sends a request.</li>
+<li>Request reaches the server.</li>
+<li>Backend identifies the endpoint.</li>
+<li>Backend performs business logic.</li>
+<li>Backend may communicate with the database.</li>
+<li>Database returns information.</li>
+<li>Server creates an API response.</li>
+<li>Client receives the response.</li>
+</ol>
+
+<h3>Example</h3>
+<pre><code>GET /api/students/101</code></pre>
+
+<pre><code>{
+  "status": "success",
+  "data": {
+    "id": 101,
+    "name": "Tejas",
+    "course": "CSE"
+  }
+}</code></pre>
+</section>
+
+<section>
+<h2>3. Spring Architecture and Spring Boot</h2>
+
+<h3>What is Spring?</h3>
+<p><strong>Spring Framework</strong> is a popular Java framework used for developing enterprise and web applications.</p>
+
+<ul>
+<li>IoC — Inversion of Control</li>
+<li>Dependency Injection</li>
+<li>Spring MVC</li>
+<li>Spring Data</li>
+<li>Spring Security</li>
+<li>Transaction management</li>
+<li>AOP</li>
+</ul>
+
+<h3>Spring Application Architecture</h3>
+<div class="diagram">
+Client
+  ↓
+Controller
+  ↓
+Service Layer
+  ↓
+Repository
+  ↓
+Database
+</div>
+
+<h3>Controller</h3>
+<p>Handles requests from the client.</p>
+<pre><code>@RestController
+public class StudentController {
+
+    @GetMapping("/students")
+    public String getStudents() {
+        return "Student List";
+    }
+}</code></pre>
+
+<h3>Service</h3>
+<p>Contains business logic.</p>
+<pre><code>@Service
+public class StudentService {
+
+    public String getStudent() {
+        return "Student Details";
+    }
+}</code></pre>
+
+<h3>Repository</h3>
+<p>Communicates with the database.</p>
+<pre><code>@Repository
+public interface StudentRepository
+        extends JpaRepository&lt;Student, Long&gt; {
+}</code></pre>
+
+<h3>What is Spring Boot?</h3>
+<p><strong>Spring Boot</strong> is built on top of Spring and simplifies the creation and running of Spring applications.</p>
+
+<h3>Major Features</h3>
+<ol>
+<li>Auto Configuration</li>
+<li>Starter Dependencies</li>
+<li>Embedded Servers</li>
+<li>Production-ready features</li>
+<li>Less configuration</li>
+<li>Easy REST API development</li>
+<li>Spring Boot Actuator</li>
+<li>Easy database integration</li>
+</ol>
+
+<h3>Spring Boot Example</h3>
+<pre><code>@SpringBootApplication
+public class StudentApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(StudentApplication.class, args);
+    }
+}</code></pre>
+</section>
+
+<section>
+<h2>4. JUnit</h2>
+
+<div class="definition">
+<strong>JUnit</strong> is a Java testing framework used mainly for unit testing. Unit testing means testing a small individual part of an application, such as a method or class.
+</div>
+
+<h3>Advantages</h3>
+<ul>
+<li>Finds bugs early</li>
+<li>Tests individual methods</li>
+<li>Supports automated testing</li>
+<li>Reduces manual testing</li>
+<li>Helps maintain code quality</li>
+<li>Useful during application development</li>
+</ul>
+
+<h3>Java Class</h3>
+<pre><code>public class Calculator {
+
+    public int add(int a, int b) {
+        return a + b;
+    }
+}</code></pre>
+
+<h3>JUnit Test</h3>
+<pre><code>import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
+
+class CalculatorTest {
+
+    @Test
+    void testAddition() {
+        Calculator calculator = new Calculator();
+
+        int result = calculator.add(10, 20);
+
+        assertEquals(30, result);
+    }
+}</code></pre>
+
+<h3>Important JUnit Annotations</h3>
+<table>
+<tr><th>Annotation</th><th>Purpose</th></tr>
+<tr><td>@Test</td><td>Identifies a test method.</td></tr>
+<tr><td>@BeforeEach</td><td>Runs before each test.</td></tr>
+<tr><td>@AfterEach</td><td>Runs after each test.</td></tr>
+<tr><td>@BeforeAll</td><td>Runs once before all tests.</td></tr>
+<tr><td>@AfterAll</td><td>Runs once after all tests.</td></tr>
+<tr><td>@Disabled</td><td>Disables a test.</td></tr>
+</table>
+
+<h3>Common Assertions</h3>
+<pre><code>assertEquals()
+assertTrue()
+assertFalse()
+assertNull()
+assertNotNull()
+assertThrows()</code></pre>
+</section>
+
+<section>
+<h2>5. Spring Data JPA and ORM</h2>
+
+<h3>What is ORM?</h3>
+<div class="definition">
+<strong>ORM</strong> stands for Object-Relational Mapping. It is a technique that maps application objects/classes to relational database data.
+</div>
+
+<div class="diagram">
+Java Class       → Database Table
+Java Object      → Database Row
+Java Field       → Table Column
+</div>
+
+<h3>Example</h3>
+<pre><code>public class Student {
+
+    private Long id;
+    private String name;
+    private String course;
+}</code></pre>
+
+<p>Corresponding database table:</p>
+<pre><code>STUDENT
+-------------------------
+id | name | course
+-------------------------
+1  | Ravi | CSE
+2  | Rahul| ECE</code></pre>
+
+<h3>What is JPA?</h3>
+<p><strong>JPA</strong> stands for Java Persistence API. It is a Java specification/API used for managing relational database data using Java objects.</p>
+<p>JPA is a specification; implementations include providers such as Hibernate.</p>
+
+<h3>What is Spring Data JPA?</h3>
+<p><strong>Spring Data JPA</strong> is a Spring project that simplifies data access using JPA. It allows developers to create repository interfaces instead of writing large amounts of database access code manually.</p>
+
+<h3>Entity Example</h3>
+<pre><code>@Entity
+public class Student {
+
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    private String name;
+    private String course;
+}</code></pre>
+
+<h3>Repository Example</h3>
+<pre><code>public interface StudentRepository
+        extends JpaRepository&lt;Student, Long&gt; {
+}</code></pre>
+
+<p>Spring Data JPA provides methods such as:</p>
+<pre><code>save()
+findById()
+findAll()
+deleteById()
+existsById()</code></pre>
+
+<h3>How Spring Data JPA Works</h3>
+<div class="diagram">
+Client
+   ↓
+Controller
+   ↓
+Service
+   ↓
+Spring Data JPA
+   ↓
+JPA
+   ↓
+Hibernate
+   ↓
+JDBC
+   ↓
+Database
+</div>
+
+<h3>Important JPA Annotations</h3>
+<table>
+<tr><th>Annotation</th><th>Purpose</th></tr>
+<tr><td>@Entity</td><td>Marks a Java class as a database entity.</td></tr>
+<tr><td>@Table</td><td>Specifies the database table.</td></tr>
+<tr><td>@Id</td><td>Specifies the primary key.</td></tr>
+<tr><td>@GeneratedValue</td><td>Generates an ID automatically.</td></tr>
+<tr><td>@Column</td><td>Maps a field to a database column.</td></tr>
+<tr><td>@OneToOne</td><td>One-to-one relationship.</td></tr>
+<tr><td>@OneToMany</td><td>One-to-many relationship.</td></tr>
+<tr><td>@ManyToOne</td><td>Many-to-one relationship.</td></tr>
+<tr><td>@ManyToMany</td><td>Many-to-many relationship.</td></tr>
+</table>
+</section>
+
+<section>
+<h2>6. Complete Relationship of All Concepts</h2>
+
+<div class="diagram">
+                         CLIENT
+                           │
+                           ▼
+                        REST API
+                           │
+                           ▼
+                      CONTROLLER
+                           │
+                           ▼
+                         SERVICE
+                           │
+                           ▼
+                    SPRING DATA JPA
+                           │
+                           ▼
+                          JPA
+                           │
+                           ▼
+                       HIBERNATE
+                           │
+                           ▼
+                          JDBC
+                           │
+                           ▼
+                       DATABASE
+
+              JUnit → Tests application components
+</div>
+
+<h3>One-Line Definitions for Exams</h3>
+<ul>
+<li><strong>SQL:</strong> A language and relational database approach used to store and manage structured data in tables.</li>
+<li><strong>NoSQL:</strong> A database approach designed for non-relational data models and scalable applications.</li>
+<li><strong>API:</strong> An interface that allows different software applications to communicate.</li>
+<li><strong>Endpoint:</strong> A specific API address used to access a resource or operation.</li>
+<li><strong>Spring:</strong> A Java framework for developing modular and enterprise applications.</li>
+<li><strong>Spring Boot:</strong> A Spring-based framework that simplifies application development using features such as auto-configuration and starter dependencies.</li>
+<li><strong>JUnit:</strong> A Java framework used for automated testing of application code.</li>
+<li><strong>ORM:</strong> A technique for mapping objects in an application to relational database data.</li>
+<li><strong>JPA:</strong> A Java specification for persistence and ORM.</li>
+<li><strong>Spring Data JPA:</strong> A Spring abstraction that simplifies database access using JPA repositories.</li>
+</ul>
+</section>
+
+</main>
+
+<footer>
+    <p>Java Backend & Database Study Notes</p>
+</footer>
+</body>
+</html>
